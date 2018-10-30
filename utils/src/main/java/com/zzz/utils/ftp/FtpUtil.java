@@ -100,6 +100,16 @@ public class FtpUtil {
         return res;
     }
 
+    public static boolean exitesDirectory(FtpConfig ftpConfig, String directory) throws IOException {
+        FTPClient ftp = connectFtp(ftpConfig);
+        try {
+           return ftp.changeWorkingDirectory(directory);
+        }catch (Exception e){
+            return false;
+        }
+
+    }
+
 
     public static void main(String[] args) throws Exception {
         FtpConfig f = new FtpConfig();
@@ -107,10 +117,9 @@ public class FtpUtil {
         f.setUserName("myuser");
         f.setPwd("mypass");
         f.setPort(2341);
-        File file = new File("D:\\a.png");
-        String dir = "a/v/b";
-        FtpUtil.makeDirectory(f,dir);
-        boolean fileRes = FtpUtil.upload(f, dir, file, "ddd.png");//把文件上传在ftp上
+        String dir = "a/v/ba";
+
+        boolean fileRes =  FtpUtil.exitesDirectory(f, dir);
         System.out.println(fileRes);
 
     }
